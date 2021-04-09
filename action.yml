@@ -1,0 +1,8 @@
+name: 'ac-version-for-fenix-beta'
+description: 'Find the A-C version used in the current Fenix Beta. Fails if not beta could be found.'
+outputs:
+  major-ac-version:
+    description: "The major A-C version (like 74) used in the current Fenix Beta"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
