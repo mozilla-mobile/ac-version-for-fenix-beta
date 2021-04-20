@@ -10,8 +10,6 @@ Example usage:
       - name: "Discover A-C Version"
         id: ac-version-for-fenix-beta
         uses: mozilla-mobile/ac-version-for-fenix-beta@1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name "Print the version number"
         run: "The current A-C Release used in Fenix Beta is $${{steps.ac-version-for-fenix-beta.outputs.major-ac-version}}"
