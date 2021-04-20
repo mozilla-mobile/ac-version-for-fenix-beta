@@ -82,15 +82,12 @@ def is_fenix_beta_branch(fenix_repo, release_branch_name):
 
 if __name__ == "__main__":
 
-    github_access_token = os.getenv("GITHUB_TOKEN")
-    if not github_access_token:
-        print("No GITHUB_TOKEN set. Exiting.")
-        sys.exit(1)
-
-    github = Github(github_access_token)
+    github = Github()
     if github.get_user() is None:
         print("Could not get authenticated user. Exiting.")
         sys.exit(1)
+
+    verbose = os.getenv("VERBOSE") == "true"
 
     organization = os.getenv("GITHUB_REPOSITORY_OWNER")
     if not organization:
@@ -109,19 +106,31 @@ if __name__ == "__main__":
 
     latest_fenix_version = get_latest_fenix_version(fenix_repo)
     if not latest_fenix_version:
-        print(f"Could not determine current A-C version on {organization}/fenix")
+        print(f"[E] Could not determine current A-C version on {organization}/fenix")
         sys.exit(1)
+
+    if verbose:
+        print(f"[I] Latest Fenix version is {latest_fenix_version}")
 
     branch_name = f"releases_v{latest_fenix_version}.0.0"
     if not is_fenix_beta_branch(fenix_repo, branch_name):
-        print(f"Branch {organization}/fenix:{branch_name} is not in beta")
+        print(f"[E] Branch {organization}/fenix:{branch_name} is not in beta")
         sys.exit(1)
+
+    if verbose:
+        print(f"[I] Latest Fenix branch name is {branch_name}")
 
     current_ac_version = get_current_ac_version_in_fenix(fenix_repo, branch_name)
     if not current_ac_version:
-        print(f"Could not determine current A-C version on {organization}/fenix:{branch_name}")
+        print(f"[E] Could not determine current A-C version on {organization}/fenix:{branch_name}")
         sys.exit(1)
 
+    if verbose:
+        print(f"[I] Current A-C version used in Fenix is {current_ac_version}")
+
     major_ac_version = major_ac_version_from_version(current_ac_version)
+
+    if verbose:
+        print(f"[I] Major A-C version is {major_ac_version}")
 
     print(f"::set-output name=major-ac-version::{major_ac_version}")
