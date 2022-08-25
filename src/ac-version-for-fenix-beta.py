@@ -65,7 +65,7 @@ def get_current_ac_version_in_fenix(fenix_repo, release_branch_name):
 
 
 def is_beta_version(version):
-    return re.compile(r'\d+.0.0-beta.\d+', re.MULTILINE).match(version)
+    return re.compile(r'\d+.0b\d+', re.MULTILINE).match(version)
 
 
 def is_fenix_beta_branch(fenix_repo, release_branch_name):
