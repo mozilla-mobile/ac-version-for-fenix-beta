@@ -22,8 +22,8 @@ from github import Github, InputGitAuthor, enable_console_debug_logging
 #
 
 def validate_ac_version(v):
-    """Validate that v is in the format of 63.0.2. Returns v or raises an exception."""
-    if not re.match(r"^\d+\.\d+\.\d+$", v):
+    """Validate that v is in the format of 109.0b1. Returns v or raises an exception."""
+    if not re.match(r"^\d+\.0b\d+$", v):
         raise Exception(f"Invalid AC version format {v}")
     return v
 
